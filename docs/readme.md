@@ -2,12 +2,14 @@
 
 ## Why Use endswith.day?
 
+This is still an experiment.
+
 Everyone deserves a well-timed break, but picking the right day can be a challenge. Whether you want to avoid busy work periods, align your days off with public holidays, or plan a personal getaway, **endswith.day** is here to help.
 
 ## How It Works
 
-1. **Input Your Schedule**: Tell us about your typical work hours, important deadlines, and your team’s schedule if relevant.
-2. **Preferences and Events**: Include personal preferences such as birthdays, anniversaries, or other significant dates you want to consider.
+1. **Input Your Country**: We will try to find all the public holidays, you can help at this stage.
+2. **We Search for Gaps**: We look for days were you get more bang for your buck.
 3. **Analysis**: Our tool analyzes your input along with company and public holidays.
 4. **Suggestions**: Receive tailored suggestions for the best days to take off, ensuring minimal work disruption and maximum relaxation.
 
