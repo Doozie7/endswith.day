@@ -1,4 +1,4 @@
-> [!#endswith.day]
+> [!endswith.day]
 > Welcome to **endswith.day**! Our mission is to help you choose the best days to take off from work, ensuring you maximize your relaxation without compromising your productivity.
 
 ## Why Use endswith.day?
