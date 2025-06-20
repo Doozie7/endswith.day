@@ -1,0 +1,73 @@
+@page "/holidays"
+@using System.Net.Http.Json
+
+<PageTitle>Public Holiday Lookup</PageTitle>
+
+<h3>Find Public Holidays</h3>
+
+<div class="mb-3">
+    <label for="countryInput" class="form-label">Enter your country code (e.g., US, GB, DE):</label>
+    <input id="countryInput" @bind="CountryCode" class="form-control" maxlength="2" />
+    <button class="btn btn-primary mt-2" @onclick="FetchHolidays">Lookup Holidays</button>
+</div>
+
+@if (IsLoading)
+{
+    <p>Loading...</p>
+}
+@if (ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ErrorMessage</div>
+}
+@if (Holidays != null)
+{
+    <h4>Public Holidays for @CountryCode.ToUpper()</h4>
+    <ul>
+        @foreach (var holiday in Holidays)
+        {
+            <li><b>@DateTime.Parse(holiday.date).ToString("yyyy-MM-dd")</b>: @holiday.localName (@holiday.name)</li>
+        }
+    </ul>
+}
+
+@code {
+    private string CountryCode { get; set; } = "US";
+    private bool IsLoading = false;
+    private string? ErrorMessage;
+    private List<Holiday>? Holidays;
+
+    private async Task FetchHolidays()
+    {
+        IsLoading = true;
+        ErrorMessage = null;
+        Holidays = null;
+        try
+        {
+            var year = DateTime.Now.Year;
+            var url = $"https://date.nager.at/api/v3/PublicHolidays/{year}/{CountryCode}";
+            Holidays = await Http.GetFromJsonAsync<List<Holiday>>(url);
+            if (Holidays == null || Holidays.Count == 0)
+            {
+                ErrorMessage = "No holidays found for this country code.";
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error fetching holidays: {ex.Message}";
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+
+    [Inject]
+    public HttpClient Http { get; set; } = default!;
+
+    public class Holiday
+    {
+        public string date { get; set; } = string.Empty;
+        public string localName { get; set; } = string.Empty;
+        public string name { get; set; } = string.Empty;
+    }
+}
